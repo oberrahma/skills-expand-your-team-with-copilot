@@ -554,13 +554,13 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
       <div class="social-share-container">
         <span class="share-label">Share:</span>
-        <button class="share-button share-facebook" data-activity="${name}" data-description="${details.description.replace(/"/g, '&quot;')}" title="Share on Facebook">
+        <button class="share-button share-facebook" data-activity="${escapeHtml(name)}" data-description="${escapeHtml(details.description)}" title="Share on Facebook">
           <span>📘</span>
         </button>
-        <button class="share-button share-twitter" data-activity="${name}" data-description="${details.description.replace(/"/g, '&quot;')}" title="Share on Twitter">
+        <button class="share-button share-twitter" data-activity="${escapeHtml(name)}" data-description="${escapeHtml(details.description)}" title="Share on Twitter">
           <span>🐦</span>
         </button>
-        <button class="share-button share-email" data-activity="${name}" data-description="${details.description.replace(/"/g, '&quot;')}" data-schedule="${formattedSchedule.replace(/"/g, '&quot;')}" title="Share via Email">
+        <button class="share-button share-email" data-activity="${escapeHtml(name)}" data-description="${escapeHtml(details.description)}" data-schedule="${escapeHtml(formattedSchedule)}" title="Share via Email">
           <span>✉️</span>
         </button>
       </div>
@@ -608,6 +608,13 @@ document.addEventListener("DOMContentLoaded", () => {
     activitiesList.appendChild(activityCard);
   }
 
+  // Escape HTML for safe insertion into attributes
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
   // Handle social sharing
   function handleShare(event) {
     const button = event.currentTarget;
@@ -624,7 +631,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     if (button.classList.contains("share-facebook")) {
       // Share on Facebook
-      const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`;
+      const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
       window.open(facebookUrl, "_blank", "width=600,height=400");
     } else if (button.classList.contains("share-twitter")) {
       // Share on Twitter
