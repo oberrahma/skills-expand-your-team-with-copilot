@@ -30,7 +30,7 @@ def get_activities(
     - difficulty: Filter activities by difficulty level
         - Empty/None: Returns all activities regardless of difficulty
         - 'Beginner', 'Intermediate', 'Advanced': Returns activities with that specific difficulty level
-        - 'All': Returns only activities with no difficulty field specified (suitable for all levels)
+        - 'Unspecified': Returns only activities with no difficulty field specified (suitable for all levels)
     """
     # Build the query based on provided filters
     query = {}
@@ -45,7 +45,7 @@ def get_activities(
         query["schedule_details.end_time"] = {"$lte": end_time}
     
     if difficulty:
-        if difficulty == "All":
+        if difficulty == "Unspecified":
             query["difficulty"] = {"$exists": False}
         else:
             query["difficulty"] = difficulty
